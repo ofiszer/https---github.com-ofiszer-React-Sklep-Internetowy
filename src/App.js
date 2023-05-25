@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import HomeScreen from './screens/HomeScreen.js';
+import ProductScreen from "./screens/ProductScreen.js";
+import ProductDetails from "./screens/ProductDetails.js";
+import { useContext } from 'react';
+import { Store } from './Store.js';
 
 function App() {
+  const {state}=useContext(Store);
+  const {cart}=state;
   return (
+    <BrowserRouter>
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <Link to="/">Allegretto</Link> 
       </header>
+      <main>
+        <Routes>
+          <Route path="/produkt/:klucz" element={<ProductScreen/>}/>
+          <Route path="/details/:klucz" element={<ProductDetails />} />
+          <Route path="/" element={<HomeScreen />}/>
+        </Routes>
+        
+      </main>
     </div>
+    </BrowserRouter>
   );
 }
 

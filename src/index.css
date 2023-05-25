@@ -11,3 +11,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+main{
+  padding:1rem;
+}
+header{
+  background-color: lightgray;
+  padding:1rem;
+}
+
+header a{
+  color:white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.produkty{
+  display:flex;
+}
+
+.produkt{
+  border:1px gray solid;
+  margin: 1rem;
+}
+.produkt img{
+  width: 100%;
+  max-width: 400px;
+}
+
+.produkt-info{
+  padding: 1rem;
+}
