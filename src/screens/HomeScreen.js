@@ -1,22 +1,27 @@
-import { useState } from 'react';
-import data from "../data";
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+// import data from '../data';
 
 function HomeScreen() {
+  const [products, setProducts] = useState([]);
   const [hoveredProduct, setHoveredProduct] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get('/api/produkty');
+      setProducts(result.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
-      <h1>Produkty</h1>
+      <h1>Polecane produkty</h1>
       <div className="produkty">
-        {data.produkty.map((produkt) => (
-          <div
-            className="produkt"
-            key={produkt.klucz}
-            onMouseEnter={() => setHoveredProduct(produkt.klucz)}
-            onMouseLeave={() => setHoveredProduct(null)}
-          >
-            <Link to={`/produkt/${produkt.klucz}`}>
+        {products.map((produkt) => (
+          <div className="produkt" key={produkt.klucz} onMouseEnter={() => setHoveredProduct(produkt.klucz)}
+          onMouseLeave={() => setHoveredProduct(null)}>
+            <Link to={`/api/produkt/${produkt.klucz}`}>
               <img src={produkt.obrazek} alt={produkt.nazwa} />
             </Link>
             <div className="produkt-info">
@@ -27,12 +32,12 @@ function HomeScreen() {
                 <strong>{produkt.cena} PLN</strong>
               </p>
               {hoveredProduct === produkt.klucz && (
-                <div>
-                  <button>Dodaj do koszyka</button>
-                  <Link to={`/produkt/${produkt.klucz}`}>
-                    <button>Szczegóły</button>
-                  </Link>
-                </div>
+              <div className="button-container">
+                <button className="koszyk-button">Do koszyka</button>
+                <Link to={`/api/produkt/${produkt.klucz}`}>
+                  <button className="szczegoly-button">Szczegóły</button>
+                </Link>
+              </div>
               )}
             </div>
           </div>
